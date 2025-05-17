@@ -6,14 +6,28 @@ import java.util.Map;
 public class Hero {
     private String name;
     private Map<Ability, Integer> abilities;
+    private int availablePoints;
 
     public Hero(String name){
         this.name = name;
         this.abilities = this.getInitialAbilities();
+        this.availablePoints = 7;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void updateAbility(Ability ability , int delta) {
+        if (ability.equals(Ability.HEALTH)) {
+            this.abilities.put(ability, abilities.get(ability) + delta * 5);
+        } else {
+            this.abilities.put(ability, abilities.get(ability) + delta);
+        }
+    }
+
+    public void updateAvailablePoints(int delta){
+        this.availablePoints += delta;
     }
 
     private Map<Ability, Integer> getInitialAbilities(){
@@ -29,5 +43,9 @@ public class Hero {
 
     public Map<Ability, Integer> getAbilities() {
         return abilities;
+    }
+
+    public int getAvailablePoints() {
+        return availablePoints;
     }
 }

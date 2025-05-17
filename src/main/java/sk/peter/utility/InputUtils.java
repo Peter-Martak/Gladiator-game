@@ -1,4 +1,4 @@
-package sk.peter;
+package sk.peter.utility;
 
 import java.util.Scanner;
 

@@ -11,6 +11,10 @@ public class Hero {
     private Map<Ability, Integer> abilities;
     private int availablePoints;
 
+    public void setAvailablePoints(int availablePoints) {
+        this.availablePoints = availablePoints;
+    }
+
     public Hero(String name){
         this.name = name;
         this.abilities = this.getInitialAbilities();
@@ -47,6 +51,8 @@ public class Hero {
                 Ability.HEALTH, 50
         ));
     }
+
+
 
     public Map<Ability, Integer> getAbilities() {
         return abilities;

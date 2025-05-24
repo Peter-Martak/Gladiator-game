@@ -1,5 +1,6 @@
 package sk.peter.service;
 
+import sk.peter.ability.Ability;
 import sk.peter.ability.HeroAbilityManager;
 import sk.peter.constatn.Constant;
 import sk.peter.domain.Hero;
@@ -35,7 +36,7 @@ public class GameManager {
                     this.currentLevel++;
                 }
                 case 1 -> {
-                    //TODO UPGRADE;
+                    upgradeAbilites();
                 }
                 case 2 -> {
                     //TODO SAVE
@@ -57,6 +58,24 @@ public class GameManager {
         }
     }
 
+    private void upgradeAbilites() {
+        System.out.println("Your abilities");
+        PrintUtils.printAbilities(this.hero);
+        System.out.println();
+        System.out.println("0. Go back");
+        System.out.println("1. Spend points " + this.hero.getAvailablePoints() + "points to spend)");
+        System.out.println("2. Remove points");
+        final int choice = InputUtils.readInt();
+
+        switch (choice) {
+            case 0 -> {}
+            case 1 -> this.heroAbilityManager.spendAvailablePoints();
+            case 2 -> this.heroAbilityManager.removePoints();
+            case 3 -> System.out.println("Invalid choice");
+        }
+    }
+
+
     private void gameInit(){
         System.out.println("Welcome to the Gladiator game!");
         System.out.println("Please enter your name");
@@ -66,7 +85,9 @@ public class GameManager {
         PrintUtils.printDivider();
         System.out.println("Your abilites:");
         PrintUtils.printAbilities(hero);
+        System.out.println();
         PrintUtils.printDivider();
         this.heroAbilityManager.spendAvailablePoints();
+        System.out.println();
     }
 }

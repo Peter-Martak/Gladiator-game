@@ -32,7 +32,6 @@ public class HeroAbilityManager {
             System.out.println("4. Skill");
             System.out.println("5. Luck");
             System.out.println("6. Health");
-            System.out.println();
 
             final int abilityIndex = InputUtils.readInt();
             Ability ability = null;

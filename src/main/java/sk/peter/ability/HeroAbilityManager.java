@@ -16,7 +16,7 @@ public class HeroAbilityManager {
     }
 
     public void spendAvailablePoints() {
-        int availablePoints = hero.getAvailablePoints();
+        int availablePoints = this.hero.getAvailablePoints();
 
         if (availablePoints == 0) {
             System.out.println("You have no points to spend");

@@ -7,19 +7,23 @@ import sk.peter.domain.Hero;
 import sk.peter.utility.InputUtils;
 import sk.peter.utility.PrintUtils;
 
+import java.io.IOException;
+
 public class GameManager {
     private final Hero hero;
     private final HeroAbilityManager heroAbilityManager;
+    private final FileService fileService;
 
     private int currentLevel;
 
     public GameManager() {
         this.hero = new Hero(" ");
         this.heroAbilityManager = new HeroAbilityManager(this.hero);
+        this.fileService = new FileService();
         this.currentLevel = Constant.INITIAL_LEVEL;
     }
 
-    public void startGame() {
+    public void startGame() throws IOException {
         gameInit();
 
         while(this.currentLevel < 5){
@@ -39,7 +43,7 @@ public class GameManager {
                     upgradeAbilites();
                 }
                 case 2 -> {
-                    //TODO SAVE
+                    fileService.savedGame(this.hero, this.currentLevel);
                 }
                 case 3 -> {
                     System.out.println("Are you sure?");

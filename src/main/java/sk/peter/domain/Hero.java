@@ -21,12 +21,22 @@ public class Hero {
         this.availablePoints = Constant.INITIAL_ABILITY_POINTS;
     }
 
+    public Hero(String name, Map<Ability, Integer> abilities, int availablePoints) {
+        this.name = name;
+        this.abilities = abilities;
+        this.availablePoints = availablePoints;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setAbilities(Map<Ability, Integer> abilities) {
+        this.abilities = abilities;
     }
 
     public void updateAbility(Ability ability , int delta) {

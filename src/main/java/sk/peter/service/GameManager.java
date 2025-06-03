@@ -1,16 +1,16 @@
 package sk.peter.service;
 
-import sk.peter.ability.Ability;
 import sk.peter.ability.HeroAbilityManager;
 import sk.peter.constatn.Constant;
 import sk.peter.domain.Hero;
+import sk.peter.domain.LoadedGame;
 import sk.peter.utility.InputUtils;
 import sk.peter.utility.PrintUtils;
 
 import java.io.IOException;
 
 public class GameManager {
-    private final Hero hero;
+    private Hero hero;
     private final HeroAbilityManager heroAbilityManager;
     private final FileService fileService;
 
@@ -26,7 +26,7 @@ public class GameManager {
     public void startGame() throws IOException {
         gameInit();
 
-        while(this.currentLevel < 5){
+        while (this.currentLevel < 5) {
             System.out.println("0. Fight Level " + this.currentLevel);
             System.out.println("1. Upgrade abilities (" + hero.getAvailablePoints() + " points left)");
             System.out.println("2. Save Game");
@@ -34,7 +34,7 @@ public class GameManager {
 
             final int choice = InputUtils.readInt();
 
-            switch (choice){
+            switch (choice) {
                 case 0 -> {
                     //TODO FIGHT
                     this.currentLevel++;
@@ -50,7 +50,7 @@ public class GameManager {
                     System.out.println("0. No");
                     System.out.println("1. Yes");
                     final int exitChoice = InputUtils.readInt();
-                    if (exitChoice == 1){
+                    if (exitChoice == 1) {
                         System.out.println("Bye!");
                         return;
                     }
@@ -72,7 +72,8 @@ public class GameManager {
         final int choice = InputUtils.readInt();
 
         switch (choice) {
-            case 0 -> {}
+            case 0 -> {
+            }
             case 1 -> this.heroAbilityManager.spendAvailablePoints();
             case 2 -> this.heroAbilityManager.removePoints();
             case 3 -> System.out.println("Invalid choice");
@@ -80,8 +81,26 @@ public class GameManager {
     }
 
 
-    private void gameInit(){
+    private void gameInit() {
         System.out.println("Welcome to the Gladiator game!");
+
+        System.out.println("0. Start new game");
+        System.out.println("1. Load game");
+        int choice = InputUtils.readInt();
+        switch (choice) {
+            case 0 -> System.out.println("Let's go then");
+            case 1 -> {
+                final LoadedGame loadedGame = fileService.loadGame();
+                if (loadedGame != null){
+                    this.hero = loadedGame.getHero();
+                    this.currentLevel = loadedGame.getLevel();
+                    return;
+                }
+            }
+            default -> System.out.println("Invalid choice");
+        }
+
+
         System.out.println("Please enter your name");
         final String name = InputUtils.readString();
         this.hero.setName(name);

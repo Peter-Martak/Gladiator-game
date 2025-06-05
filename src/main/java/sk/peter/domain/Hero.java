@@ -6,9 +6,7 @@ import sk.peter.constatn.Constant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Hero {
-    private String name;
-    private Map<Ability, Integer> abilities;
+public class Hero extends GameCharacter{
     private int availablePoints;
 
     public void setAvailablePoints(int availablePoints) {
@@ -16,19 +14,14 @@ public class Hero {
     }
 
     public Hero(String name){
-        this.name = name;
+        super(name, new HashMap<>());
         this.abilities = this.getInitialAbilities();
         this.availablePoints = Constant.INITIAL_ABILITY_POINTS;
     }
 
     public Hero(String name, Map<Ability, Integer> abilities, int availablePoints) {
-        this.name = name;
-        this.abilities = abilities;
+        super(name,abilities);
         this.availablePoints = availablePoints;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
@@ -61,13 +54,6 @@ public class Hero {
                 Ability.HEALTH, 50
         ));
     }
-
-
-
-    public Map<Ability, Integer> getAbilities() {
-        return abilities;
-    }
-
     public int getAvailablePoints() {
         return availablePoints;
     }

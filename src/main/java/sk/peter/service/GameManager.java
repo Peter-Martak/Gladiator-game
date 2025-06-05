@@ -2,32 +2,38 @@ package sk.peter.service;
 
 import sk.peter.ability.HeroAbilityManager;
 import sk.peter.constatn.Constant;
+import sk.peter.domain.Enemy;
 import sk.peter.domain.Hero;
 import sk.peter.domain.LoadedGame;
+import sk.peter.utility.EnemyGenerator;
 import sk.peter.utility.InputUtils;
 import sk.peter.utility.PrintUtils;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GameManager {
     private Hero hero;
     private final HeroAbilityManager heroAbilityManager;
     private final FileService fileService;
-
     private int currentLevel;
+
+    private final Map<Integer, Enemy> enemiesByLevel;
 
     public GameManager() {
         this.hero = new Hero(" ");
         this.heroAbilityManager = new HeroAbilityManager(this.hero);
         this.fileService = new FileService();
         this.currentLevel = Constant.INITIAL_LEVEL;
+        this.enemiesByLevel = EnemyGenerator.createEnemies();
     }
 
     public void startGame() throws IOException {
         gameInit();
 
-        while (this.currentLevel < 5) {
-            System.out.println("0. Fight Level " + this.currentLevel);
+        while (this.currentLevel <= this.enemiesByLevel.size()) {
+            final Enemy enemy = enemiesByLevel.get(this.currentLevel);
+            System.out.println("0. Fight Level " +enemy.getName() + " (level "+ this.currentLevel);
             System.out.println("1. Upgrade abilities (" + hero.getAvailablePoints() + " points left)");
             System.out.println("2. Save Game");
             System.out.println("3. Exit Game");

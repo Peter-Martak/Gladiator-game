@@ -1,11 +1,8 @@
 package sk.peter.ability;
 
-import sk.peter.constatn.Constant;
 import sk.peter.domain.Hero;
 import sk.peter.utility.InputUtils;
 import sk.peter.utility.PrintUtils;
-
-import java.util.Map;
 
 public class HeroAbilityManager {
 
@@ -61,10 +58,12 @@ public class HeroAbilityManager {
             if (availablePoints > 1) {
                 PrintUtils.printAbilities(hero);
             }
+            System.out.println();
         }
 
         System.out.println("You have spent all your available points. Your abilities are: ");
         PrintUtils.printAbilities(hero);
+        System.out.println();
     }
 
     public void removePoints() {

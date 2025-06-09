@@ -1,7 +1,8 @@
 package sk.peter.service;
 
+import sk.peter.ability.Ability;
 import sk.peter.ability.HeroAbilityManager;
-import sk.peter.constatn.Constant;
+import sk.peter.constatn.Constants;
 import sk.peter.domain.Enemy;
 import sk.peter.domain.Hero;
 import sk.peter.domain.LoadedGame;
@@ -26,11 +27,11 @@ public class GameManager {
         this.heroAbilityManager = new HeroAbilityManager(this.hero);
         this.fileService = new FileService();
         this.battleService = new BattleService();
-        this.currentLevel = Constant.INITIAL_LEVEL;
+        this.currentLevel = Constants.INITIAL_LEVEL;
         this.enemiesByLevel = EnemyGenerator.createEnemies();
     }
 
-    public void startGame() throws IOException {
+    public void startGame() throws InterruptedException {
         gameInit();
 
         while (this.currentLevel <= this.enemiesByLevel.size()) {
@@ -45,8 +46,25 @@ public class GameManager {
             switch (choice) {
                 case 0 -> {
                     if(battleService.isHeroReadyToBattle(this.hero, enemy)){
-                        //TODO Battle
-                        this.currentLevel++;
+                        final int heroHealthBeforeBattle = this.hero.getAbilities().get(Ability.HEALTH);
+                        final int enemyLife = enemy.getAbilities().get(Ability.HEALTH);
+                        final boolean hasHeroWon = battleService.battle(this.hero, enemy);
+
+                        if (hasHeroWon){
+                            PrintUtils.printDivider();
+                            System.out.println("You have won this battle! You have gained " + this.currentLevel + " points to spend");
+                            this.hero.updateAvailablePoints(this.currentLevel);
+                            this.currentLevel++;
+                        }else {
+                            System.out.println("You have lost");
+                        }
+
+                        //restore Hero health
+                        this.hero.setAbility(Ability.HEALTH, heroHealthBeforeBattle);
+                        enemy.setAbility(Ability.HEALTH, enemyLife);
+                        System.out.println("You have full health now");
+                        PrintUtils.printDivider();
+
                     }
                 }
                 case 1 -> {

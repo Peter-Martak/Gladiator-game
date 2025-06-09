@@ -1,7 +1,7 @@
 package sk.peter.domain;
 
 import sk.peter.ability.Ability;
-import sk.peter.constatn.Constant;
+import sk.peter.constatn.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class Hero extends GameCharacter{
     public Hero(String name){
         super(name, new HashMap<>());
         this.abilities = this.getInitialAbilities();
-        this.availablePoints = Constant.INITIAL_ABILITY_POINTS;
+        this.availablePoints = Constants.INITIAL_ABILITY_POINTS;
     }
 
     public Hero(String name, Map<Ability, Integer> abilities, int availablePoints) {
@@ -34,7 +34,7 @@ public class Hero extends GameCharacter{
 
     public void updateAbility(Ability ability , int delta) {
         if (ability.equals(Ability.HEALTH)) {
-            this.abilities.put(ability, abilities.get(ability) + delta * Constant.HEALTH_OF_ONE_POINT);
+            this.abilities.put(ability, abilities.get(ability) + delta * Constants.HEALTH_OF_ONE_POINT);
         } else {
             this.abilities.put(ability, abilities.get(ability) + delta);
         }
@@ -56,5 +56,10 @@ public class Hero extends GameCharacter{
     }
     public int getAvailablePoints() {
         return availablePoints;
+    }
+
+
+    public void setAbility(Ability ability, int value) {
+        this.abilities.put(ability, value);
     }
 }

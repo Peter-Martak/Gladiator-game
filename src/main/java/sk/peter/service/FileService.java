@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class FileService {
 
-    public void savedGame(Hero hero, int level) throws IOException {
+    public void savedGame(Hero hero, int level) {
         while (true) {
             System.out.println("How do you want to name your save?");
             final String fileName = InputUtils.readString();
